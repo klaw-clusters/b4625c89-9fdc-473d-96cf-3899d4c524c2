@@ -1,10 +1,13 @@
 {
     "kind": "SeldonDeployment",
-    "apiVersion": "machinelearning.seldon.io/v1alpha2",
+    "apiVersion": "machinelearning.seldon.io/v1",
     "metadata": {
         "name": "anglo-erika-test",
         "namespace": "default",
-        "creationTimestamp": null
+        "creationTimestamp": null,
+        "labels": {
+            "app.kubernetes.io/instance": "b4625c89-9fdc-473d-96cf-3899d4c524c2-default"
+        }
     },
     "spec": {
         "name": "anglo-erika-test",
@@ -46,49 +49,7 @@
                 "replicas": 1,
                 "engineResources": {},
                 "svcOrchSpec": {},
-                "traffic": 70
-            },
-            {
-                "name": "canary",
-                "graph": {
-                    "name": "simple-cnn",
-                    "implementation": "TENSORFLOW_SERVER",
-                    "modelUri": "gs://tom-seldon-examples/workshops/manufacturing/anglo-erika/simple-cnn/",
-                    "logger": {
-                        "mode": "all"
-                    }
-                },
-                "componentSpecs": [
-                    {
-                        "metadata": {
-                            "creationTimestamp": "2022-02-17T13:35:19Z"
-                        },
-                        "spec": {
-                            "containers": [
-                                {
-                                    "name": "simple-cnn",
-                                    "resources": {
-                                        "limits": {
-                                            "cpu": "1",
-                                            "memory": "1Gi"
-                                        },
-                                        "requests": {
-                                            "cpu": "1",
-                                            "memory": "1Gi"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                ],
-                "replicas": 1,
-                "annotations": {
-                    "seldon.io/canary": "true"
-                },
-                "engineResources": {},
-                "svcOrchSpec": {},
-                "traffic": 30
+                "traffic": 100
             }
         ],
         "protocol": "seldon"
