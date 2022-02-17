@@ -1,0 +1,97 @@
+{
+    "kind": "SeldonDeployment",
+    "apiVersion": "machinelearning.seldon.io/v1alpha2",
+    "metadata": {
+        "name": "aa-tunji-test",
+        "namespace": "default",
+        "creationTimestamp": null
+    },
+    "spec": {
+        "name": "aa-tunji-test",
+        "predictors": [
+            {
+                "name": "default",
+                "graph": {
+                    "name": "inception",
+                    "implementation": "TENSORFLOW_SERVER",
+                    "modelUri": "gs://tom-seldon-examples/workshops/manufacturing/aa-tunji/inception/",
+                    "logger": {
+                        "mode": "all"
+                    }
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2022-02-17T13:35:23Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "inception",
+                                    "resources": {
+                                        "limits": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        },
+                                        "requests": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "engineResources": {},
+                "svcOrchSpec": {},
+                "traffic": 70
+            },
+            {
+                "name": "canary",
+                "graph": {
+                    "name": "simple-cnn",
+                    "implementation": "TENSORFLOW_SERVER",
+                    "modelUri": "gs://tom-seldon-examples/workshops/manufacturing/aa-tunji/simple-cnn/",
+                    "logger": {
+                        "mode": "all"
+                    }
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2022-02-17T13:35:23Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "simple-cnn",
+                                    "resources": {
+                                        "limits": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        },
+                                        "requests": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "annotations": {
+                    "seldon.io/canary": "true"
+                },
+                "engineResources": {},
+                "svcOrchSpec": {},
+                "traffic": 30
+            }
+        ],
+        "protocol": "seldon"
+    },
+    "status": {}
+}
