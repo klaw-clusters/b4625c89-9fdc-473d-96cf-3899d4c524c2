@@ -1,0 +1,73 @@
+{
+    "kind": "SeldonDeployment",
+    "apiVersion": "machinelearning.seldon.io/v1",
+    "metadata": {
+        "name": "heybigdefault",
+        "namespace": "default",
+        "creationTimestamp": null,
+        "labels": {
+            "fluentd": "true"
+        }
+    },
+    "spec": {
+        "name": "heybigdefault",
+        "predictors": [
+            {
+                "name": "default",
+                "graph": {
+                    "name": "heybigdefault-container",
+                    "type": "MODEL",
+                    "parameters": [
+                        {
+                            "name": "model_path",
+                            "value": "katacoda-scenarios/dataiku-model/high-revenue-prediction.pmml",
+                            "type": "STRING"
+                        }
+                    ],
+                    "logger": {
+                        "mode": "all"
+                    }
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2022-02-17T15:17:57Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "heybigdefault-container",
+                                    "image": "seldonexamples/dataiku-example:0.1",
+                                    "resources": {
+                                        "limits": {
+                                            "cpu": "1",
+                                            "memory": "1Gi",
+                                            "nvidia.com/gpu": "0"
+                                        },
+                                        "requests": {
+                                            "cpu": "100m",
+                                            "memory": "1Gi",
+                                            "nvidia.com/gpu": "0"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "annotations": {
+                    "project.seldon.io/heybigdefault-container": "default"
+                },
+                "engineResources": {},
+                "svcOrchSpec": {},
+                "traffic": 100
+            }
+        ],
+        "annotations": {
+            "seldon.io/engine-seldon-log-messages-externally": "true"
+        },
+        "protocol": "seldon"
+    },
+    "status": {}
+}
