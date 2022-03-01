@@ -1,12 +1,11 @@
 {
     "kind": "SeldonDeployment",
-    "apiVersion": "machinelearning.seldon.io/v1",
+    "apiVersion": "machinelearning.seldon.io/v1alpha2",
     "metadata": {
         "name": "karolis-lr",
         "namespace": "default",
         "creationTimestamp": null,
         "labels": {
-            "app.kubernetes.io/instance": "b4625c89-9fdc-473d-96cf-3899d4c524c2-default",
             "fluentd": "true"
         }
     },
@@ -29,7 +28,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2022-03-01T13:46:38Z"
+                            "creationTimestamp": "2022-03-01T14:26:39Z"
                         },
                         "spec": {
                             "containers": [
@@ -53,7 +52,15 @@
                 "replicas": 1,
                 "engineResources": {},
                 "svcOrchSpec": {},
-                "traffic": 100
+                "traffic": 100,
+                "explainer": {
+                    "type": "AnchorTabular",
+                    "modelUri": "gs://tom-seldon-examples/retail-workshop/models/tom-farrand/lr",
+                    "containerSpec": {
+                        "name": "",
+                        "resources": {}
+                    }
+                }
             }
         ],
         "annotations": {
