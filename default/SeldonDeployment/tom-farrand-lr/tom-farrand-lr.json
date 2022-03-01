@@ -1,12 +1,11 @@
 {
     "kind": "SeldonDeployment",
-    "apiVersion": "machinelearning.seldon.io/v1",
+    "apiVersion": "machinelearning.seldon.io/v1alpha2",
     "metadata": {
         "name": "tom-farrand-lr",
         "namespace": "default",
         "creationTimestamp": null,
         "labels": {
-            "app.kubernetes.io/instance": "b4625c89-9fdc-473d-96cf-3899d4c524c2-default",
             "fluentd": "true"
         }
     },
@@ -18,7 +17,10 @@
                 "graph": {
                     "name": "tom-farrand-lr-container",
                     "implementation": "SKLEARN_SERVER",
-                    "modelUri": "gs://tom-seldon-examples/retail-workshop/models/tom-farrand/gb",
+                    "endpoint": {
+                        "type": "REST"
+                    },
+                    "modelUri": "gs://tom-seldon-examples/retail-workshop/models/tom-farrand/lr",
                     "logger": {
                         "mode": "all"
                     }
@@ -26,7 +28,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2022-03-01T13:56:24Z"
+                            "creationTimestamp": "2022-03-01T13:46:58Z"
                         },
                         "spec": {
                             "containers": [
@@ -34,14 +36,12 @@
                                     "name": "tom-farrand-lr-container",
                                     "resources": {
                                         "limits": {
-                                            "cpu": "1",
-                                            "memory": "1Gi",
-                                            "nvidia.com/gpu": "0"
+                                            "cpu": "100m",
+                                            "memory": "1Gi"
                                         },
                                         "requests": {
                                             "cpu": "100m",
-                                            "memory": "1Gi",
-                                            "nvidia.com/gpu": "0"
+                                            "memory": "1Gi"
                                         }
                                     }
                                 }
@@ -50,14 +50,7 @@
                     }
                 ],
                 "replicas": 1,
-                "annotations": {
-                    "project.seldon.io/tom-farrand-lr-container": "default",
-                    "seldon.io/canary": "false"
-                },
                 "engineResources": {},
-                "labels": {
-                    "version": "default"
-                },
                 "svcOrchSpec": {},
                 "traffic": 100
             }
