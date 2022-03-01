@@ -6,6 +6,7 @@
         "namespace": "default",
         "creationTimestamp": null,
         "labels": {
+            "app.kubernetes.io/instance": "b4625c89-9fdc-473d-96cf-3899d4c524c2-default",
             "fluentd": "true"
         }
     },
@@ -14,48 +15,6 @@
         "predictors": [
             {
                 "name": "default",
-                "graph": {
-                    "name": "mjurkus-lr-container",
-                    "implementation": "SKLEARN_SERVER",
-                    "endpoint": {
-                        "type": "REST"
-                    },
-                    "modelUri": "gs://tom-seldon-examples/retail-workshop/models/mjurkus/lr",
-                    "logger": {
-                        "mode": "all"
-                    }
-                },
-                "componentSpecs": [
-                    {
-                        "metadata": {
-                            "creationTimestamp": "2022-03-01T13:46:50Z"
-                        },
-                        "spec": {
-                            "containers": [
-                                {
-                                    "name": "mjurkus-lr-container",
-                                    "resources": {
-                                        "limits": {
-                                            "cpu": "100m",
-                                            "memory": "1Gi"
-                                        },
-                                        "requests": {
-                                            "cpu": "100m",
-                                            "memory": "1Gi"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                ],
-                "replicas": 1,
-                "engineResources": {},
-                "svcOrchSpec": {},
-                "traffic": 100
-            },
-            {
-                "name": "shadow",
                 "graph": {
                     "name": "mjurkus-lr-container",
                     "implementation": "SKLEARN_SERVER",
@@ -96,8 +55,11 @@
                     "seldon.io/canary": "false"
                 },
                 "engineResources": {},
+                "labels": {
+                    "version": "default"
+                },
                 "svcOrchSpec": {},
-                "shadow": true
+                "traffic": 100
             }
         ],
         "annotations": {
