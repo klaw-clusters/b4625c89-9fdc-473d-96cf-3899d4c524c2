@@ -1,0 +1,114 @@
+{
+    "kind": "SeldonDeployment",
+    "apiVersion": "machinelearning.seldon.io/v1alpha2",
+    "metadata": {
+        "name": "josh-test",
+        "namespace": "default",
+        "creationTimestamp": null
+    },
+    "spec": {
+        "name": "josh-test",
+        "predictors": [
+            {
+                "name": "default",
+                "graph": {
+                    "name": "inception",
+                    "implementation": "TENSORFLOW_SERVER",
+                    "modelUri": "gs://tom-seldon-examples/workshops/manufacturing/josh/inception/",
+                    "logger": {
+                        "mode": "all"
+                    }
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2022-03-01T16:33:03Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "inception",
+                                    "resources": {
+                                        "limits": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        },
+                                        "requests": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "engineResources": {},
+                "svcOrchSpec": {},
+                "traffic": 70,
+                "explainer": {
+                    "type": "AnchorImage",
+                    "modelUri": "gs://tom-seldon-examples/workshops/manufacturing/pretrained/explainer",
+                    "containerSpec": {
+                        "name": "",
+                        "resources": {
+                            "limits": {
+                                "cpu": "2",
+                                "memory": "2Gi"
+                            },
+                            "requests": {
+                                "cpu": "2",
+                                "memory": "2Gi"
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "name": "canary",
+                "graph": {
+                    "name": "simple-cnn",
+                    "implementation": "TENSORFLOW_SERVER",
+                    "modelUri": "gs://tom-seldon-examples/workshops/manufacturing/josh/simple-cnn/",
+                    "logger": {
+                        "mode": "all"
+                    }
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2022-03-01T16:33:03Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "simple-cnn",
+                                    "resources": {
+                                        "limits": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        },
+                                        "requests": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "annotations": {
+                    "seldon.io/canary": "true"
+                },
+                "engineResources": {},
+                "svcOrchSpec": {},
+                "traffic": 30
+            }
+        ],
+        "protocol": "seldon"
+    },
+    "status": {}
+}
